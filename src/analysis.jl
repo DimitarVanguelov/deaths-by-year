@@ -54,7 +54,7 @@ adj_years = reverse(years[begin:end-1])
 
 # plot all years at once
 theme(:dark)
-p = Plots.palette(:viridis, 7)
+p = Plots.palette(:viridis, 7; rev=true)
 plt = plot(
     weeks,
     [usdf[:, Symbol("year_", year)] for year in adj_years],
@@ -70,6 +70,6 @@ plt = plot(
     size=(800, 500),
     dpi=200,
     formatter=:plain,
+    top_margin=18px,
     left_margin=18px,
-    bottom_margin=18px
 )
