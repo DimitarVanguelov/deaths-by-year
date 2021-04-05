@@ -73,3 +73,5 @@ plt = plot(
     top_margin=18px,
     left_margin=18px,
 )
+
+savefig(plt, "plots/plot.png")
