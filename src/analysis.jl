@@ -1,5 +1,6 @@
-using CSV
+using HTTP
 using DataFrames
+using CSV
 
 using Plots
 using Plots.PlotMeasures
@@ -7,18 +8,20 @@ using PlotThemes
 using Formatting
 
 # ingest data
-file1 = "data/Weekly_Counts_of_Deaths_by_State_and_Select_Causes__2014-2019.csv"
-file2 = "data/Weekly_Counts_of_Deaths_by_State_and_Select_Causes__2020-2021.csv"
+url1 = raw"https://data.cdc.gov/resource/3yf8-kanr.csv?$limit=50000"
+url2 = raw"https://data.cdc.gov/resource/muzy-jte6.csv?$limit=50000"
 
-df1 = CSV.read(file1, DataFrame; normalizenames=true)
-df2 = CSV.read(file2, DataFrame; normalizenames=true)
+df1 = CSV.read(HTTP.get(url1).body, DataFrame)
+df2 = CSV.read(HTTP.get(url2).body, DataFrame)
+
+rename!(df1, :allcause => :all_cause)
 
 # keep only columns of interest at the moment
 cols_to_keep = [
-    :Jurisdiction_of_Occurrence,
-    :MMWR_Year,
-    :MMWR_Week,
-    :All_Cause
+    :jurisdiction_of_occurrence,
+    :mmwryear,
+    :mmwrweek,
+    :all_cause
 ]
 
 # combine the two data sources into one dataframe
