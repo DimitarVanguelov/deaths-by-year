@@ -68,13 +68,14 @@ plt = plot(
     title="Weekly Deaths from All Causes in the US by Year (2014-2020)",
     xlabel="Week of Year",
     ylabel="Weekly Deaths",
-    legend=:top,
+    legend=:bottomleft,
     grid=:y,
     size=(800, 500),
     dpi=200,
-    formatter=:plain,
+    formatter= y -> format(y, autoscale=:metric),
     top_margin=18px,
     left_margin=18px,
+    ylim=(0, 100_000)
 )
 
 savefig(plt, "plots/plot.png")
